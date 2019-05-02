@@ -6,6 +6,8 @@ function loadEvents() {
     document.getElementById('clear').addEventListener('click', clearList);
 
     document.querySelector('ul').addEventListener('click', deleteOrTick);
+
+    document.addEventListener('change', hideList);
 }
 
 // deleteTick
@@ -25,6 +27,18 @@ function deleteTask(e) {
 }
 
 // tick a task - This function starts with const task = e.target.nextSibling; this line of code gets the text that is within the li element, e.target is the tick button, so e.target.nextSibling is the actual task. Then it checks if it was checked if it was it changes the text - decoration to line - through and change the text color to #ff0000.If it was unchecked it changes the text - decoration to none and changes back the text color to #2f44f.
+
+function hideList() {
+    let listItems = document.querySelectorAll('li');
+    console.log('listening')
+
+    if (listItems.length == 0) {
+        document.querySelector('.tasksBoard').style.display = 'none';
+    } else {
+        document.querySelector('.tasksBoard').style.display = 'block';
+    }
+}
+
 function tickTask(e) {
     const task = e.target.nextSibling;
     if (e.target.checked) {
@@ -40,6 +54,7 @@ function tickTask(e) {
 function clearList(e) {
     // setting the ul innerHML to an empty string
     let ul = document.querySelector('ul').innerHTML = '';
+    document.querySelector('.tasksBoard').style.display = 'none';
 }
 // subit data function
 function submit(e) {
@@ -56,5 +71,7 @@ function addTask(task) {
     let li = document.createElement('li');
     li.innerHTML = `<span class="delete">×</span><input type="checkbox"><label>${task}</label>`;
     ul.appendChild(li);
+
     document.querySelector('.tasksBoard').style.display = 'block';
+    
 }
